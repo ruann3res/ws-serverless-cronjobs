@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "module": "commonjs",
+    "rootDirs": [
+      "src",
+    ],
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "outDir": "dist",
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "target": "ES2021",
+  },
+  "compileOnSave": true,
+  "include": [
+    "src",
+  ]
+}
