@@ -5,6 +5,7 @@ provider:
   runtime: nodejs20.x
   architecture: arm64
   region: sa-east-1
+  websocketsApiRouteSelectionExpression: $request.body.action
 
 package:
   individually: true
@@ -17,9 +18,16 @@ build:
       - '@aws-sdk/*'
 
 functions:
-  hello:
-    handler: src/functions/hello.handler
+  wsConnection:
+    handler: src/functions/wsConnection.handler
+    events:
+      - websocket:
+          route: $connect
+      - websocket:
+          route: $disconnect
+  healthCheck:
+    handler: src/functions/healthCheck.handler
     events:
       - httpApi:
-          path: /
-          method: get
+          method: GET
+          path: /healthcheck
