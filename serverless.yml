@@ -25,6 +25,8 @@ functions:
           route: $connect
       - websocket:
           route: $disconnect
+      - websocket:
+          route: sendMessage
   healthCheck:
     handler: src/functions/healthCheck.handler
     events:

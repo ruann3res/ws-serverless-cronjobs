@@ -16,5 +16,8 @@
     "@typescript-eslint/parser": "^8.18.2",
     "eslint": "^8.57.1",
     "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@aws-sdk/client-apigatewaymanagementapi": "^3.716.0"
   }
 }
