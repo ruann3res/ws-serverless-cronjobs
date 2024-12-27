@@ -6,6 +6,19 @@ provider:
   architecture: arm64
   region: sa-east-1
   websocketsApiRouteSelectionExpression: $request.body.action
+  environment:
+    CONNECTIONS_TABLE: !Ref ConnectionsTable
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamo:PutItem
+            - dynamo:DeleteItem
+            - dynamo:Scan
+            - dynamo:Query
+          Resource: 
+            - !GetAtt ConnectionsTable.Arn
 
 package:
   individually: true
@@ -33,3 +46,18 @@ functions:
       - httpApi:
           method: GET
           path: /healthcheck
+
+
+resources:
+  Resources:
+    ConnectionsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+          TableName: ConnectionsTable
+          BillingMode: PAY_PER_REQUEST
+          AttributeDefinitions:
+            - AttributeName: connectionId
+              AttributeType: S
+          KeySchema:
+            - AttributeName: connectionId
+              KeyType: HASH
