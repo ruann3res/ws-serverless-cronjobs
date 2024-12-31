@@ -13,10 +13,10 @@ provider:
       statements:
         - Effect: Allow
           Action:
-            - dynamo:PutItem
-            - dynamo:DeleteItem
-            - dynamo:Scan
-            - dynamo:Query
+            - dynamodb:PutItem
+            - dynamodb:DeleteItem
+            - dynamodb:Scan
+            - dynamodb:Query
           Resource: 
             - !GetAtt ConnectionsTable.Arn
 
@@ -38,8 +38,6 @@ functions:
           route: $connect
       - websocket:
           route: $disconnect
-      - websocket:
-          route: sendMessage
   healthCheck:
     handler: src/functions/healthCheck.handler
     events:
