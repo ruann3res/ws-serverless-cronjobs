@@ -1,6 +1,6 @@
 import { PutCommand } from '@aws-sdk/lib-dynamodb';
 import { APIGatewayProxyWebsocketEventV2 } from 'aws-lambda';
-import { dynamoClient } from 'clients/db/dynamoClient';
+import { dynamoClient } from 'clients';
 import { env } from 'config';
 
 export class ConnectController {
