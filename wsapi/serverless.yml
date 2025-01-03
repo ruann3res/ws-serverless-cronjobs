@@ -1,4 +1,6 @@
-service: wsapi
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: ruanneres
+service: ws-api
 
 provider:
   name: aws
@@ -6,8 +8,11 @@ provider:
   architecture: arm64
   region: sa-east-1
   websocketsApiRouteSelectionExpression: $request.body.action
+  stage: ${opt:stage, 'dev'}
   environment:
     CONNECTIONS_TABLE: !Ref ConnectionsTable
+    API_GW_CONNECTION_URL: !Join ['',['https://',!Ref WebsocketsApi, '.execute-api.', '${self:provider.region}', '.amazonaws.com/',
+    '${self:provider.stage}']]
   iam:
     role:
       statements:
@@ -38,6 +43,11 @@ functions:
           route: $connect
       - websocket:
           route: $disconnect
+  wsSendMessage:
+      handler: src/functions/wsSendMessage.handler
+      events:
+        - websocket:
+            route: sendMessage        
   healthCheck:
     handler: src/functions/healthCheck.handler
     events:
