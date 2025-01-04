@@ -47,7 +47,12 @@ functions:
       handler: src/functions/wsSendMessage.handler
       events:
         - websocket:
-            route: sendMessage        
+            route: sendMessage  
+  wsGarbageCollector:
+      handler: src/functions/wsGarbageCollector.handler
+      events: 
+      - schedule:
+          rate: rate(10 minutes)
   healthCheck:
     handler: src/functions/healthCheck.handler
     events:
